@@ -1,8 +1,11 @@
 package com.parkinglot;
 
 public class Ticket {
-    private int id;
+    public Integer position;
     public Ticket (){
 
+    }
+    public Ticket(Integer position){
+        this.position = position;
     }
 }
