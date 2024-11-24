@@ -6,11 +6,13 @@ import java.util.Map;
 
 public class ParkingLot {
     public Map<Ticket,Car> parkingRecords = new HashMap<>();
-    public final Ticket usedTicket = new Ticket();
     public final int parkingSpace = 10;
     public int presentSpace=0;
     public int[]  position = {1,1,1,1,1,1,1,1,1,1};
     public  Ticket park(Car car,Integer parkPosition){
+        if(parkPosition ==null ) {
+            throw new NoAvailablePosition();
+        }
         if (presentSpace<parkingSpace&&parkPosition<11&&parkPosition>0&&position[parkPosition]==1){
             presentSpace+=1;
             position[parkPosition] = 0;
@@ -18,30 +20,25 @@ public class ParkingLot {
             parkingRecords.put(ticket,car);
             return  ticket;
         }
-        if(parkPosition ==null ) {
-            throw new NoAvailablePosition();
-        }
         return null;
-
     }
 
 
-    public  Car fetch(Ticket ticket) {
-        if(ticket == usedTicket){
+    public Car fetch(Ticket ticket) {
+        if (ticket.isUsed()) {
             throw new UnrecognizedParkingTicketException();
         }
-        if (parkingRecords.get(ticket)==null){
+        if (parkingRecords.get(ticket) == null) {
             throw new UnrecognizedParkingTicketException();
-        }else {
-            presentSpace-=1;
-            Car car = parkingRecords.get(ticket);
-            position[ticket.position] = 1;
-            ticket = usedTicket;
-            parkingRecords.remove(ticket);
-            return car;
         }
 
-        }
+        presentSpace -= 1;
+        Car car = parkingRecords.get(ticket);
+        position[ticket.position] = 1;
+        parkingRecords.remove(ticket);
+        ticket.markAsUsed();
+        return car;
+    }
 
     public Car wrongFetch(Ticket ticket,Car car){
         if(position[ticket.position]==1){

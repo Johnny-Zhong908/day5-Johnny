@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class SmartParkingBoy {
     ArrayList<ParkingLot> hasParkinglot =new ArrayList<>();
-    public void addParkinglot(ArrayList<ParkingLot> hasParkinglots){
+    public int count =1;
+    public void addParkinglot(){
         hasParkinglot.add(new ParkingLot());
     }
     public Ticket multiplicationPark(ArrayList<ParkingLot> hasParkinglot,Car car,Integer position1){
@@ -15,6 +16,7 @@ public class SmartParkingBoy {
             }
             else {
                 presentParkingLOT = hasParkinglot.get(i);
+                count = i+1;
             }
         }
         if(presentParkingLOT == null){

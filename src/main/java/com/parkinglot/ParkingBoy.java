@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class ParkingBoy {
     ArrayList<ParkingLot> hasParkinglot =new ArrayList<>();
-    public ParkingLot parkingLot;
+    public ParkingLot parkingLot =new ParkingLot();
+    public int count = 1;
     public void addParkinglot(){
         hasParkinglot.add(new ParkingLot());
     }
@@ -16,6 +17,9 @@ public class ParkingBoy {
     public Car fetch(ParkingLot parkingLot,Ticket ticket){
         return parkingLot.fetch(ticket);
     }
+    public Car wrongFetch(ParkingLot parkingLot,Ticket ticket,Car car){
+        return parkingLot.wrongFetch(ticket,car);
+    }
 
     public Ticket multiplicationPark(ArrayList<ParkingLot> hasParkinglots,Car car,Integer position1){
         ParkingLot presentParkingLOT = null;
@@ -24,6 +28,7 @@ public class ParkingBoy {
                 presentParkingLOT = parkinglot;
                 break;
             }
+            count +=1;
         }
         if(presentParkingLOT == null){
             throw new NoAvailablePosition();

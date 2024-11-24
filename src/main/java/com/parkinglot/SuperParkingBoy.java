@@ -3,25 +3,30 @@ package com.parkinglot;
 import java.util.ArrayList;
 
 public class SuperParkingBoy {
-
     ArrayList<ParkingLot> hasParkinglot =new ArrayList<>();
-    public void addParkinglot(ArrayList<ParkingLot> hasParkinglots){
+    public int count =1;
+
+    public void addParkinglot(){
         hasParkinglot.add(new ParkingLot());
     }
-    public Ticket multiplicationPark(ArrayList<ParkingLot> hasParkinglot,Car car,Integer position1){
+    public Ticket multiplicationPark(ArrayList<ParkingLot> hasParkinglot, Car car, Integer position1) {
         ParkingLot presentParkingLOT = hasParkinglot.get(0);
-        for (int i=1;i<hasParkinglot.size();i++) {
-            if (presentParkingLOT.presentSpace/presentParkingLOT.parkingSpace <= hasParkinglot.get(i).presentSpace/hasParkinglot.get(i).parkingSpace) {
-                continue;
-            }
-            else {
+
+        for (int i = 1; i < hasParkinglot.size(); i++) {
+            double currentRate = (double)presentParkingLOT.presentSpace / presentParkingLOT.parkingSpace;
+            double compareRate = (double)hasParkinglot.get(i).presentSpace / hasParkinglot.get(i).parkingSpace;
+
+            if (currentRate > compareRate) {
                 presentParkingLOT = hasParkinglot.get(i);
+                count = i + 1;
             }
         }
-        if(presentParkingLOT == null){
+
+        if (presentParkingLOT == null) {
             throw new NoAvailablePosition();
         }
-        return presentParkingLOT.park(car,position1);
+
+        return presentParkingLOT.park(car, position1);
     }
     public Car multiplicationFetch(ArrayList<ParkingLot> hasParkinglots,Ticket ticket){
         ParkingLot persentParkinglots =null;
